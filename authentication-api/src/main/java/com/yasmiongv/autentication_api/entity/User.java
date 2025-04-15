@@ -2,12 +2,18 @@ package com.yasmiongv.autentication_api.entity;
 
 import com.yasmiongv.autentication_api.entity.enums.Role;
 import jakarta.persistence.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
+
 
 @Entity
 @Table(name = "users")
-public class Users {
+@EntityListeners(AuditingEntityListener.class)
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -22,10 +28,17 @@ public class Users {
     @Column(nullable = false)
     private Role role;
 
-    public Users() {
+    @CreatedDate
+    @Column(name = "created_at",nullable = false)
+    private LocalDateTime createdAt;
+    @LastModifiedDate
+    @Column(name = "updated_at",nullable = false)
+    private LocalDateTime updatedAt;
+
+    public User() {
     }
 
-    public Users(String name, String email, String password, Role role) {
+    public User(String name, String email, String password, Role role) {
         this.name = name;
         this.email = email;
         this.password = password;
