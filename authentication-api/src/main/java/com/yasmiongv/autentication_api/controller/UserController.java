@@ -1,5 +1,7 @@
 package com.yasmiongv.autentication_api.controller;
 
+import com.yasmiongv.autentication_api.controller.dtos.LoginRequest;
+import com.yasmiongv.autentication_api.controller.dtos.LoginResponse;
 import com.yasmiongv.autentication_api.controller.dtos.UserDTO;
 import com.yasmiongv.autentication_api.service.UserService;
 import jakarta.validation.Valid;
@@ -25,4 +27,17 @@ public class UserController {
         service.register(user);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request) {
+        var user = service.findByEmail(request.email());
+
+        if (user.isEmpty() || !user.get().getPassword().equals(request.password())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String token = service.generateJwtToken(user.get());
+        return ResponseEntity.ok(new LoginResponse(token));
+    }
+
 }
