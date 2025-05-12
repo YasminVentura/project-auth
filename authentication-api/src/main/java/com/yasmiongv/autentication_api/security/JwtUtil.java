@@ -32,7 +32,7 @@ public class JwtUtil {
     public String generateToken(String email, Role role) {
         return Jwts.builder()
                 .subject(email)
-                .claims(Map.of("role", role))
+                .claims(Map.of("role", role.name()))
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + expirationMillis))
                 .signWith(key)
