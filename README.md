@@ -49,7 +49,7 @@ A API estará disponível em `http://localhost:8080`.
 2. Siga a sequência de chamadas na collection:
 
    * Criar usuário
-   * Login (`/signin`)
+   * Login
    * Copiar o token JWT retornado
    * Testar os endpoints protegidos:
 
