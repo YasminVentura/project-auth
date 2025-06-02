@@ -1,7 +1,7 @@
 services:
 
   postgres:
-    container_name: authetication_db
+    container_name: authentication_db
     image: postgres:latest
     restart: unless-stopped
     environment:
@@ -11,7 +11,22 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgressql/data
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    container_name: authentication_api
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/users-data
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRINGDOC_SWAGGER_UI_PATH: /docs
+    restart: unless-stopped
 
 volumes:
   postgres_data:
