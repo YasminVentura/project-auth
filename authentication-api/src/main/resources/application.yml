@@ -19,3 +19,9 @@ spring:
 jwt:
   secret: ZWxhdXRlLXNoZWlsYS1wb3ItdGVzdGUtYXV0aC1hcGk=
   expiration: 3600000
+
+springdoc:
+  swagger-ui:
+    path: /docs
+  api-docs:
+    path: /v3/api-docs
